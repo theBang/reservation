@@ -8,7 +8,7 @@ const jsonParser = bodyParser.json();
 
 function asyncCall(callback) {
     return function (req, res, next) {
-        callback(req, res, next).catch(next)
+        callback(req, res, next).catch(next);
     }
 }
 
@@ -17,9 +17,11 @@ function startServer() {
         res.json(await db.findRooms());
     }));
 
-    app.get('/rooms/free/:start/:end', (req, res) => {
-        res.send(`Free rooms from ${req.params.start} to ${req.params.end}`);
-    });
+    app.get('/rooms/free/:startDate/:endDate', asyncCall(async (req, res) => {
+        const { startDate, endDate } = req.params;
+
+        res.send(await db.findFreeRooms(startDate, endDate));
+    }));
 
     app.post('/reserve', jsonParser, (req, res) => {
         res.send(`Resrve room ${JSON.stringify(req.body)}`);
@@ -27,6 +29,11 @@ function startServer() {
 
     app.delete('/reserve', (req, res) => {
         res.send('Remove reservation');
+    })
+
+    app.use((err, req, res, next) => {
+        console.error(err.stack)
+        res.status(500).send(err.message || 'Something broke!')
     })
 
     app.listen(PORT, () => {

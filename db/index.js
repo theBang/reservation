@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const format = require('pg-format');
 const path = require("path");
 const { promises: { readFile } } = require("fs");
 
@@ -25,4 +26,26 @@ async function findRooms() {
     return rows;
 }
 
-module.exports = { query, initDb, findRooms };
+async function findFreeRooms(startDate, endDate) {
+    const rooms = []
+    try {
+        const findText = format(`
+        SELECT num FROM rooms
+            WHERE rooms.id NOT IN 
+                (SELECT distinct room_id FROM reservations AS r
+                    WHERE (r.start_date, r.end_date) OVERLAPS (DATE %L, DATE %L)) 
+    `, startDate, endDate);
+        rooms = (await query(findText)).rows;
+    } catch(e) {
+        throw Error("Find free rooms failed");
+    }
+    
+    return rooms;
+}
+
+module.exports = {
+    query,
+    initDb,
+    findRooms,
+    findFreeRooms
+};
