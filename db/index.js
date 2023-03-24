@@ -20,4 +20,9 @@ async function initDb() {
     await query(seedText);
 }
 
-module.exports = { query, initDb };
+async function findRooms() {
+    const { rows } = await query('SELECT num FROM rooms');
+    return rows;
+}
+
+module.exports = { query, initDb, findRooms };
