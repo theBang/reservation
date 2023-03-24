@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS reservation;
+
 DROP TABLE IF EXISTS rooms;
 CREATE TABLE rooms 
 (
@@ -12,7 +14,6 @@ CREATE TABLE clients
 	login varchar(64)
 );
 
-DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation
 (
 	id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
