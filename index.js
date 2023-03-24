@@ -25,16 +25,18 @@ function startServer() {
 
     app.post('/reserve', jsonParser, (req, res) => {
         res.send(`Resrve room ${JSON.stringify(req.body)}`);
-    })
+    });
 
-    app.delete('/reserve', (req, res) => {
-        res.send('Remove reservation');
-    })
+    app.delete('/reserve/:id', asyncCall(async (req, res) => {
+        const { id } = req.params;
+        await db.deleteReserve(id);
+        res.send(`Reservation ${id} was removed`);
+    }));
 
     app.use((err, req, res, next) => {
         console.error(err.stack)
         res.status(500).send(err.message || 'Something broke!')
-    })
+    });
 
     app.listen(PORT, () => {
         console.log(`Example app listening on port ${PORT}`);
