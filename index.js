@@ -29,8 +29,14 @@ function startServer() {
 
     app.delete('/reserve/:id', asyncCall(async (req, res) => {
         const { id } = req.params;
-        await db.deleteReserve(id);
-        res.send(`Reservation ${id} was removed`);
+        const isDeleted = await db.deleteReserve(id);
+        let status = 200;
+        let message = `Reservation ${id} was removed`;
+        if (!isDeleted) {
+            status = 404;
+            message = `Reservation ${id} was not found`;
+        }
+        res.status(status).send(message);
     }));
 
     app.use((err, req, res, next) => {

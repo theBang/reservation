@@ -52,16 +52,16 @@ async function findFreeRooms(startDate, endDate) {
 }
 
 async function deleteReserve(id) {
-    let rooms = []
+    let isDeleted = false;
     try {
-        rooms = await query('DELETE FROM reservations WHERE id=$1', [id]);
+        const { rowCount } = await query('DELETE FROM reservations WHERE id=$1', [id]);
+        isDeleted = rowCount > 0;
     } catch (e) {
         console.error(e.stack);
         throw Error('Remove reservation failed');
     }
 
-    console.log(rooms);
-    return rooms;
+    return isDeleted;
 }
 
 module.exports = {
