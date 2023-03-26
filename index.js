@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const superagent = require('superagent');
 const bodyParser = require('body-parser');
 const db = require('./db');
 const app = express();
@@ -25,8 +26,18 @@ function startServer() {
 
     app.post('/reserve', jsonParser, asyncCall(async (req, res) => {
         const { startDate, endDate, roomId, clientId } = req.body;
-        await db.reserve(startDate, endDate, roomId, clientId)
-        res.send(`Reserved from ${startDate} to ${endDate}, room ID: ${roomId}, client ID: ${clientId}`);
+        let isVip = false;
+
+        try {
+            const resCheckVip = await superagent.get('http://localhost:3001/check'); 
+            isVip = resCheckVip.body;
+        } catch (e) {
+            console.log(e);
+            throw Error('Check vip failed');
+        }
+
+        await db.reserve(startDate, endDate, isVip, roomId, clientId)
+        res.send(`Reserved from ${startDate} to ${endDate}, room ID: ${roomId}, client ID: ${clientId}, vip: ${isVip}`);
     }));
 
     app.delete('/reserve/:id', asyncCall(async (req, res) => {
