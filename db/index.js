@@ -53,6 +53,23 @@ async function findFreeRooms(startDate, endDate, clientId) {
     return rooms;
 }
 
+async function reserve(startDate, endDate, roomId, clientId) {
+    let isReserved = false;
+    try {
+        const reserveQuery = {
+            text: 'INSERT INTO reservations(start_date, end_date, room_id, client_id) VALUES($1, $2, $3, $4)',
+            values: [startDate, endDate, roomId, clientId],
+        };
+        await query(reserveQuery);
+    } catch (e) {
+        const errMsg = e.message;
+        const occupiedMsg = 'Room is occupied';
+        throw Error(errMsg === occupiedMsg ? occupiedMsg : 'Invalid date for reservation');
+    }
+
+    return isReserved;
+}
+
 async function deleteReserve(id) {
     let isDeleted = false;
     try {
@@ -71,5 +88,6 @@ module.exports = {
     initDb,
     findRooms,
     findFreeRooms,
+    reserve,
     deleteReserve
 };
