@@ -1,7 +1,8 @@
-const { Pool } = require('pg');
+const { Pool, Client } = require('pg');
 const format = require('pg-format');
 const path = require("path");
 const { promises: { readFile } } = require("fs");
+const ClientError = require('../error');
 
 const pool = new Pool();
 
@@ -27,7 +28,7 @@ async function findRooms() {
         rooms = (await query('SELECT num FROM rooms')).rows;
     } catch (e) {
         console.error(e.stack);
-        throw Error('List rooms failed');
+        throw new ClientError('List rooms failed');
     }
     return rooms;
 }
@@ -47,7 +48,7 @@ async function findFreeRooms(startDate, endDate, clientId) {
         rooms = (await query(findText)).rows;
     } catch (e) {
         console.error(e.stack);
-        throw Error('Find free rooms failed');
+        throw new ClientError('Find free rooms failed');
     }
 
     return rooms;
@@ -62,9 +63,10 @@ async function reserve(startDate, endDate, isVip, roomId, clientId) {
         };
         await query(reserveQuery);
     } catch (e) {
+        console.error(e.stack);
         const errMsg = e.message;
         const occupiedMsg = 'Room is occupied';
-        throw Error(errMsg === occupiedMsg ? occupiedMsg : 'Invalid date for reservation');
+        throw new ClientError(errMsg === occupiedMsg ? occupiedMsg : 'Invalid date for reservation');
     }
 
     return isReserved;
@@ -77,7 +79,7 @@ async function deleteReserve(id) {
         isDeleted = rowCount > 0;
     } catch (e) {
         console.error(e.stack);
-        throw Error('Remove reservation failed');
+        throw new ClientError('Remove reservation failed');
     }
 
     return isDeleted;
