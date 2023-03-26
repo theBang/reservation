@@ -23,9 +23,11 @@ function startServer() {
         res.send(await db.findFreeRooms(startDate, endDate, clientId));
     }));
 
-    app.post('/reserve', jsonParser, (req, res) => {
-        res.send(`Resrve room ${JSON.stringify(req.body)}`);
-    });
+    app.post('/reserve', jsonParser, asyncCall(async (req, res) => {
+        const { startDate, endDate, roomId, clientId } = req.body;
+        await db.reserve(startDate, endDate, roomId, clientId)
+        res.send(`Reserved from ${startDate} to ${endDate}, room ID: ${roomId}, client ID: ${clientId}`);
+    }));
 
     app.delete('/reserve/:id', asyncCall(async (req, res) => {
         const { id } = req.params;
