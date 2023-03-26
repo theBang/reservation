@@ -53,12 +53,12 @@ async function findFreeRooms(startDate, endDate, clientId) {
     return rooms;
 }
 
-async function reserve(startDate, endDate, roomId, clientId) {
+async function reserve(startDate, endDate, isVip, roomId, clientId) {
     let isReserved = false;
     try {
         const reserveQuery = {
-            text: 'INSERT INTO reservations(start_date, end_date, room_id, client_id) VALUES($1, $2, $3, $4)',
-            values: [startDate, endDate, roomId, clientId],
+            text: 'INSERT INTO reservations(start_date, end_date, vip, room_id, client_id) VALUES($1, $2, $3, $4, $5)',
+            values: [startDate, endDate, isVip, roomId, clientId],
         };
         await query(reserveQuery);
     } catch (e) {
