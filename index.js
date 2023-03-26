@@ -17,10 +17,10 @@ function startServer() {
         res.json(await db.findRooms());
     }));
 
-    app.get('/rooms/free/:startDate/:endDate', asyncCall(async (req, res) => {
-        const { startDate, endDate } = req.params;
+    app.get('/rooms/free', jsonParser, asyncCall(async (req, res) => {
+        const { startDate, endDate, clientId } = req.body;
 
-        res.send(await db.findFreeRooms(startDate, endDate));
+        res.send(await db.findFreeRooms(startDate, endDate, clientId));
     }));
 
     app.post('/reserve', jsonParser, (req, res) => {
@@ -52,8 +52,10 @@ function startServer() {
 if (process.argv[2] === "--migrate") {
     db.initDb()
         .then(startServer)
-        .catch(() => {
+        .catch(e => {
             console.error('DB migrate failed');
+            console.error(e.message);
+            console.error(e.stack);
         });
 } else {
     startServer();
