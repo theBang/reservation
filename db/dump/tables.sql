@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS clients;
 CREATE TABLE clients 
 (
 	id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-	login varchar(64)
+	login varchar(64) UNIQUE NOT NULL
 );
 
 CREATE TABLE reservations
