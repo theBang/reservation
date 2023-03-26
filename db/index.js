@@ -32,16 +32,18 @@ async function findRooms() {
     return rooms;
 }
 
-async function findFreeRooms(startDate, endDate) {
+async function findFreeRooms(startDate, endDate, clientId) {
     let rooms = []
     try {
         const findText = format(`
-        SELECT num FROM rooms
+        SELECT DISTINCT num FROM rooms
+            LEFT JOIN reservations ON rooms.id = room_id
             WHERE rooms.id NOT IN 
                 (SELECT distinct room_id FROM reservations AS r
                     WHERE (r.start_date, r.end_date) OVERLAPS (DATE %L, DATE %L)) 
+                OR client_id = %L
             ORDER BY num ASC
-        `, startDate, endDate);
+        `, startDate, endDate, clientId);
         rooms = (await query(findText)).rows;
     } catch (e) {
         console.error(e.stack);
