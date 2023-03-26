@@ -3,6 +3,7 @@ const express = require('express');
 const superagent = require('superagent');
 const bodyParser = require('body-parser');
 const db = require('./db');
+const ClientError = require('./error');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const jsonParser = bodyParser.json();
@@ -29,7 +30,7 @@ function startServer() {
         let isVip = false;
 
         try {
-            const resCheckVip = await superagent.get('http://localhost:3001/check'); 
+            const resCheckVip = await superagent.get('http://localhost:3001/check');
             isVip = resCheckVip.body;
         } catch (e) {
             console.log(e);
@@ -53,8 +54,15 @@ function startServer() {
     }));
 
     app.use((err, req, res, next) => {
-        console.error(err.stack)
-        res.status(500).send(err.message || 'Something broke!')
+        let status = 500;
+        let msg = 'Something broke!';
+        if (err instanceof ClientError) {
+            status = err.status;
+            msg = err.message;
+        } else {
+            console.error(err);
+        }
+        res.status(status).send(msg);
     });
 
     app.listen(PORT, () => {
