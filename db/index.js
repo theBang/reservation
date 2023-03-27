@@ -66,7 +66,7 @@ async function reserve(startDate, endDate, isVip, roomId, clientId) {
         console.error(e.stack);
         const errMsg = e.message;
         const occupiedMsg = 'Room is occupied';
-        throw new ClientError(errMsg === occupiedMsg ? occupiedMsg : 'Invalid date for reservation');
+        throw new ClientError(errMsg === occupiedMsg ? occupiedMsg : 'Invalid data for reservation');
     }
 
     return isReserved;
@@ -79,7 +79,7 @@ async function deleteReserve(id) {
         isDeleted = rowCount > 0;
     } catch (e) {
         console.error(e.stack);
-        throw new ClientError('Remove reservation failed');
+        throw new ClientError(`Remove reservation ${id}: incorrect input`);
     }
 
     return isDeleted;
