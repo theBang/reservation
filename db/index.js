@@ -55,13 +55,14 @@ async function findFreeRooms(startDate, endDate, clientId) {
 }
 
 async function reserve(startDate, endDate, isVip, roomId, clientId) {
-    let isReserved = false;
+    let id = "";
     try {
         const reserveQuery = {
-            text: 'INSERT INTO reservations(start_date, end_date, vip, room_id, client_id) VALUES($1, $2, $3, $4, $5)',
+            text: 'INSERT INTO reservations(start_date, end_date, vip, room_id, client_id) VALUES($1, $2, $3, $4, $5) RETURNING id',
             values: [startDate, endDate, isVip, roomId, clientId],
         };
-        await query(reserveQuery);
+        const { rows } = await query(reserveQuery);
+        id = rows[0].id;
     } catch (e) {
         console.error(e.stack);
         const errMsg = e.message;
@@ -69,7 +70,7 @@ async function reserve(startDate, endDate, isVip, roomId, clientId) {
         throw new ClientError(errMsg === occupiedMsg ? occupiedMsg : 'Invalid data for reservation');
     }
 
-    return isReserved;
+    return id;
 }
 
 async function deleteReserve(id) {

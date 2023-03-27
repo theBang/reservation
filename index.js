@@ -61,7 +61,7 @@ function startServer() {
 
     app.post('/reserve', jsonParser, asyncCall(async (req, res) => {
         const { startDate, endDate, roomId, clientId } = req.body;
-        
+
         if (!startDate || !endDate || !roomId || !clientId) {
             throw new ClientError(MSG_PARAM);
         }
@@ -81,7 +81,7 @@ function startServer() {
         if (!await db.checkClientExists(clientId)) {
             throw new ClientError(`Client ${clientId} does not exist`);
         }
-        
+
         let isVip = false;
 
         try {
@@ -92,13 +92,13 @@ function startServer() {
             throw Error('Check vip failed');
         }
 
-        await db.reserve(startDate, endDate, isVip, roomId, clientId)
-        res.send(`Reserved from ${startDate} to ${endDate}, room ID: ${roomId}, client ID: ${clientId}, vip: ${isVip}`);
+        const reservationId = await db.reserve(startDate, endDate, isVip, roomId, clientId)
+        res.json({ reservationId, startDate, endDate, roomId, clientId, isVip });
     }));
 
     app.delete('/reserve/:id', asyncCall(async (req, res) => {
         const { id } = req.params;
-        
+
         if (!id) {
             throw new ClientError(MSG_PARAM);
         }
