@@ -101,7 +101,7 @@ async function checkClientExists(id) {
 async function checkRoomExists(id) {
     let isRoom = false;
     try {
-        const { rows } = await query('SELECT COUNT(*) FROM reservations WHERE id=$1', [id]);
+        const { rows } = await query('SELECT COUNT(*) FROM rooms WHERE id=$1', [id]);
         isRoom = parseInt(rows[0].count, 10) > 0;
     } catch (e) {
         console.error(e.stack);
