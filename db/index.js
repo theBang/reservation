@@ -85,11 +85,39 @@ async function deleteReserve(id) {
     return isDeleted;
 }
 
+async function checkClientExists(id) {
+    let isClient = false;
+    try {
+        const { rows } = await query('SELECT COUNT(*) FROM clients WHERE id=$1', [id]);
+        isClient = parseInt(rows[0].count, 10) > 0;
+    } catch (e) {
+        console.error(e.stack);
+        throw new ClientError('Incorrect input');
+    }
+
+    return isClient;
+}
+
+async function checkRoomExists(id) {
+    let isRoom = false;
+    try {
+        const { rows } = await query('SELECT COUNT(*) FROM reservations WHERE id=$1', [id]);
+        isRoom = parseInt(rows[0].count, 10) > 0;
+    } catch (e) {
+        console.error(e.stack);
+        throw new ClientError('Incorrect input');
+    }
+
+    return isRoom;
+}
+
 module.exports = {
     query,
     initDb,
     findRooms,
     findFreeRooms,
     reserve,
-    deleteReserve
+    deleteReserve,
+    checkClientExists,
+    checkRoomExists
 };

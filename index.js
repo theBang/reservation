@@ -22,6 +22,9 @@ function startServer() {
     app.get('/rooms/free', jsonParser, asyncCall(async (req, res) => {
         const { startDate, endDate, clientId } = req.body;
 
+        if (!await db.checkClientExists(clientId)) {
+            throw new ClientError(`Client ${clientId} does not exist`);
+        }
         res.send(await db.findFreeRooms(startDate, endDate, clientId));
     }));
 
