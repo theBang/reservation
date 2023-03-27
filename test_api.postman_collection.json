@@ -174,7 +174,7 @@
 					]
 				},
 				{
-					"name": "Valid",
+					"name": "user_1 from 2023-04-01 to 2023-04-11",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -184,6 +184,70 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"startDate\": \"2023-04-01\",\r\n    \"endDate\": \"2023-04-11\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/rooms/free",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rooms",
+								"free"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user_3 from 2023-04-01 to 2023-04-11",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-04-01\",\r\n    \"endDate\": \"2023-04-11\",\r\n    \"clientId\": \"be7561a9-aa99-4e12-a78c-995e266ce145\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/rooms/free",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rooms",
+								"free"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user_3 from 2023-04-20 to 2023-04-25",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-04-20\",\r\n    \"endDate\": \"2023-04-25\",\r\n    \"clientId\": \"be7561a9-aa99-4e12-a78c-995e266ce145\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -526,7 +590,7 @@
 			]
 		},
 		{
-			"name": "Reservation",
+			"name": "Remove reservation",
 			"item": [
 				{
 					"name": "Validation",
