@@ -11,8 +11,8 @@ app.get('/check', function (req, res, next) {
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send(err.message || 'Something broke!')
+    console.error(err.stack);
+    res.status(500).send(err.message || 'Something broke!');
 });
  
 app.listen(PORT, function () {
