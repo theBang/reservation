@@ -4,7 +4,8 @@
   "description": "Hotel rooms reservation API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"node index.js\" \"node check-user.js\"",
+    "start:migrate": "concurrently \"node index.js --migrate\" \"node check-user.js\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/theBang/reservation#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
