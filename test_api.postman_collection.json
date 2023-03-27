@@ -1,0 +1,644 @@
+{
+	"info": {
+		"_postman_id": "d06e79fe-7f07-489a-856b-d5d07ac6ccef",
+		"name": "Test Reservation API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Free rooms",
+			"item": [
+				{
+					"name": "Validation",
+					"item": [
+						{
+							"name": "Missing parameter",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"endDate\": \"2023-04-11\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/rooms/free",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"rooms",
+										"free"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid dates",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-\",\r\n    \"endDate\": \"2023-04-11\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/rooms/free",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"rooms",
+										"free"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid dates range",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-11\",\r\n    \"endDate\": \"2023-04-01\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/rooms/free",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"rooms",
+										"free"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid UUID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-01\",\r\n    \"endDate\": \"2023-04-11\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/rooms/free",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"rooms",
+										"free"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Client does not exist",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-01\",\r\n    \"endDate\": \"2023-04-11\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508b\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/rooms/free",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"rooms",
+										"free"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Valid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-04-01\",\r\n    \"endDate\": \"2023-04-11\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/rooms/free",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rooms",
+								"free"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reserve",
+			"item": [
+				{
+					"name": "Validation",
+					"item": [
+						{
+							"name": "Missing parameter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid dates",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023/04/02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-9d7797af2db2\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid dates range",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-10\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-9d7797af2db2\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid room UUID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid client UUID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-9d7797af2db2\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Room does not exist",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-9d7797af2db3\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Client does not exist",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startDate\": \"2023-04-02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-9d7797af2db2\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508b\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Success: user_1 for room_1 - dates overlaps",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-04-01\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-9d7797af2db2\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/reserve",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reserve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fail: user_1 for room_2 - dates overlaps",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-04-01\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"eeef4bf9-cb9a-48f9-b635-5f9f1d376798\",\r\n    \"clientId\": \"6a0482a2-dce4-491f-a1a8-aeb01a55508a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/reserve",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reserve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fail: user_3 for room_1 - dates overlaps",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-04-02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"97e53db7-f1ac-43dd-a97a-9d7797af2db2\",\r\n    \"clientId\": \"be7561a9-aa99-4e12-a78c-995e266ce145\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/reserve",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reserve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Success: user_3 for room_3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-04-02\",\r\n    \"endDate\": \"2023-04-04\",\r\n    \"roomId\": \"92377a29-636c-479e-9c02-eb70d56f1756\",\r\n    \"clientId\": \"be7561a9-aa99-4e12-a78c-995e266ce145\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/reserve",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reserve"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "Validation",
+					"item": [
+						{
+							"name": "Reservation not found",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/reserve/9df86f73-f8b5-4c4e-9391-4d85fb2cebe3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve",
+										"9df86f73-f8b5-4c4e-9391-4d85fb2cebe3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid UUID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/reserve/9df86f73-f8b5-4c4e-9391-",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve",
+										"9df86f73-f8b5-4c4e-9391-"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "404",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Remove reservation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/reserve/9df86f73-f8b5-4c4e-9391-4d85fb2cebe2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reserve",
+								"9df86f73-f8b5-4c4e-9391-4d85fb2cebe2"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "All rooms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
